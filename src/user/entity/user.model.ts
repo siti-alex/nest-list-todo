@@ -1,4 +1,12 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import {
+  BelongsToMany,
+  Column,
+  DataType,
+  Model,
+  Table,
+} from 'sequelize-typescript';
+import { UserRole } from '../UserRole.model';
+import { Role } from '../../roles/roles.model';
 
 interface UserCreationAttrs {
   login: string;
@@ -35,4 +43,7 @@ export class User extends Model<User> {
     allowNull: true,
   })
   fio: string;
+
+  @BelongsToMany(() => Role, () => UserRole)
+  roles: Role[];
 }
