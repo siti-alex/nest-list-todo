@@ -11,6 +11,8 @@ import { UserRole } from './user/UserRole.model';
 import { BoardModule } from './board/board.module';
 import { UserBoard } from './board/UserBoard.model';
 import { Board } from './board/board.model';
+import { TaskModule } from './task/task.module';
+import { Task } from './task/task.model';
 
 @Module({
   imports: [
@@ -27,13 +29,14 @@ import { Board } from './board/board.model';
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       // entities: [User],
-      models: [User, Role, Board, UserRole, UserBoard],
+      models: [User, Role, Board, UserRole, UserBoard, Task],
       logging: true,
       synchronize: true,
       autoLoadModels: true,
     }),
     RolesModule,
     BoardModule,
+    TaskModule,
   ],
 })
 export class AppModule {}

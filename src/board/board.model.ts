@@ -2,11 +2,15 @@ import {
   BelongsToMany,
   Column,
   DataType,
+  ForeignKey,
   Model,
   Table,
+  HasMany,
 } from 'sequelize-typescript';
 import { UserBoard } from './UserBoard.model';
 import { User } from '../user/entity/user.model';
+import { ManyToOne } from 'typeorm';
+import { Task } from '../task/task.model';
 
 interface BoardModel {
   description: string;
@@ -30,4 +34,7 @@ export class Board extends Model<Board> {
 
   @BelongsToMany(() => User, () => UserBoard)
   users: User[];
+
+  @HasMany(() => Task)
+  tasks: Task[];
 }

@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Board } from './board.model';
 import { CreateUserDto } from '../user/dto/create-user-dto';
 import { CreateBoardDto } from './dto/create-board.dto';
+import { CreateTaskDto } from '../task/dto/create-task.dto';
 
 @Injectable()
 export class BoardService {
@@ -14,7 +15,14 @@ export class BoardService {
   }
 
   async getAllBoards() {
-    const boards = await this.boardRepostitory.findAll();
+    const boards = await this.boardRepostitory.findAll({
+      include: { all: true },
+    });
     return boards;
+  }
+
+  async getById(id) {
+    const board = await this.boardRepostitory.findByPk(id);
+    return board;
   }
 }

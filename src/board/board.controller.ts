@@ -6,10 +6,10 @@ import { CreateBoardDto } from './dto/create-board.dto';
 export class BoardController {
   constructor(private boardService: BoardService) {}
 
-  @Post()
-  create(@Body() dto: CreateBoardDto) {
-    return this.boardService.createBoard(dto);
-  }
+  // @Post()
+  // create(@Body() dto: CreateBoardDto) {
+  //   return this.boardService.createBoard(dto);
+  // }
 
   @Get()
   getAll() {

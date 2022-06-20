@@ -41,7 +41,7 @@ export class UserService {
       // await user.$add('board', )
       const board = await this.boardService.createBoard(dto);
       await user.$add('board', board.id);
-      return 'Добавлено';
+      return 'Добавлена таблица';
     }
     throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
   }
