@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { BoardService } from './board.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 
@@ -6,8 +6,13 @@ import { CreateBoardDto } from './dto/create-board.dto';
 export class BoardController {
   constructor(private boardService: BoardService) {}
 
-  @Post('create')
+  @Post()
   create(@Body() dto: CreateBoardDto) {
     return this.boardService.createBoard(dto);
+  }
+
+  @Get()
+  getAll() {
+    return this.boardService.getAllBoards();
   }
 }

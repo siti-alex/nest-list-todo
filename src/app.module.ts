@@ -17,7 +17,7 @@ import { Board } from './board/board.model';
     UserModule,
     AuthModule,
     ConfigModule.forRoot({
-      envFilePath: '.env',
+      envFilePath: 'property.env',
     }),
     SequelizeModule.forRoot({
       dialect: 'postgres',

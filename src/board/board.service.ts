@@ -12,4 +12,9 @@ export class BoardService {
     const board = await this.boardRepostitory.create(dto);
     return board;
   }
+
+  async getAllBoards() {
+    const boards = await this.boardRepostitory.findAll();
+    return boards;
+  }
 }
