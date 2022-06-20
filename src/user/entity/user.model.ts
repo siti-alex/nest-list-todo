@@ -7,6 +7,8 @@ import {
 } from 'sequelize-typescript';
 import { UserRole } from '../UserRole.model';
 import { Role } from '../../roles/roles.model';
+import { UserBoard } from '../../board/UserBoard.model';
+import { Board } from '../../board/board.model';
 
 interface UserCreationAttrs {
   login: string;
@@ -46,4 +48,7 @@ export class User extends Model<User> {
 
   @BelongsToMany(() => Role, () => UserRole)
   roles: Role[];
+
+  @BelongsToMany(() => Board, () => UserBoard)
+  board: Board[];
 }

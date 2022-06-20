@@ -1,14 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { User } from './entity/user.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateUserDto } from './dto/create-user-dto';
 import { RolesService } from '../roles/roles.service';
+import { CreateBoardDto } from '../board/dto/create-board.dto';
+import { BoardService } from '../board/board.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User) private userRepository: typeof User,
     private roleService: RolesService,
+    private boardService: BoardService,
   ) {}
 
   async createUser(dto: CreateUserDto) {
@@ -30,5 +33,16 @@ export class UserService {
       include: { all: true },
     });
     return user;
+  }
+
+  async addBoard(dto: CreateBoardDto) {
+    const user = await this.userRepository.findByPk(dto.userId);
+    if (user) {
+      // await user.$add('board', )
+      const board = await this.boardService.createBoard(dto);
+      await user.$add('board', board.id);
+      return 'Добавлено';
+    }
+    throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
   }
 }
