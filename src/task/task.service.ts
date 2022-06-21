@@ -12,40 +12,26 @@ export class TaskService {
   ) {}
 
   async create(dto: CreateTaskDto) {
-    // const task = await this.taskRepository.create(dto);
-    // return task;
     try {
-      // const board = await this.boardService.getById(dto.boardId);
-      // console.log(board);
-      // if (board) {
-      //   const task = await this.taskRepository.create(dto);
-      //   return task;
-      // }
       const task = await this.taskRepository.create(dto);
       return task;
     } catch (e) {
       throw new HttpException('Таблица не найдена', HttpStatus.NOT_FOUND);
-    }
-    // const board = this.boardService.getById(dto.boardId);
-    // if (board) {
-    //   const task = await this.taskRepository.create(dto);
-    //   return task;
-    // } else {
-    //   throw new HttpException('Таблица не найдена', HttpStatus.NOT_FOUND);
-    // }
-  }
-  async getBoardById(id) {
-    const board = this.boardService.getById(id);
-    console.log(board);
-    if (board) {
-      return true;
-    } else {
-      return false;
     }
   }
 
   async getAll() {
     const tasks = await this.taskRepository.findAll();
     return tasks;
+  }
+
+  async getTasksByBoardId(boardId: number) {
+    try {
+      const tasks = await this.taskRepository.findAll({ where: { boardId } });
+      if (tasks.length > 0) return tasks;
+      else throw new HttpException('Доска не найдена', HttpStatus.NOT_FOUND);
+    } catch (e) {
+      throw new HttpException('Доска не найдена', HttpStatus.NOT_FOUND);
+    }
   }
 }

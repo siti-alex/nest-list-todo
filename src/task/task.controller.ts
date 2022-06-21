@@ -4,6 +4,7 @@ import {
   Get,
   HttpException,
   HttpStatus,
+  Param,
   Post,
 } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -16,16 +17,16 @@ export class TaskController {
   @Post()
   createTask(@Body() dto: CreateTaskDto) {
     return this.taskService.create(dto);
-    // const board = this.taskService.getBoardById(dto.boardId);
-    // if (board) {
-    //   return this.taskService.create(dto);
-    // } else {
-    //   throw new HttpException('Таблица не найдена', HttpStatus.NOT_FOUND);
-    // }
   }
 
   @Get()
   getAllTasks() {
     return this.taskService.getAll();
+  }
+
+  @Get(':id')
+  getTasksByBoardId(@Param() params) {
+    console.log(params.id);
+    return this.taskService.getTasksByBoardId(params.id);
   }
 }

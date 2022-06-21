@@ -8,10 +8,10 @@ import { CreateBoardDto } from '../board/dto/create-board.dto';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Post()
-  create(@Body() userDto: CreateUserDto) {
-    return this.userService.createUser(userDto);
-  }
+  // @Post()
+  // create(@Body() userDto: CreateUserDto) {
+  //   return this.userService.createUser(userDto);
+  // }
 
   @Get()
   // @UseGuards(JwtAuthGuard)
