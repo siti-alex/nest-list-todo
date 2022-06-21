@@ -54,7 +54,7 @@ export class Task extends Model<Task, TaskCreationAttrs> {
     unique: false,
     allowNull: true,
   })
-  dateComplete: string;
+  dateComplete: Date;
 
   @ForeignKey(() => Board)
   @Column({

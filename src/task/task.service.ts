@@ -39,6 +39,11 @@ export class TaskService {
     try {
       const task = await this.taskRepository.findByPk(id);
       task.complete = !task.complete;
+      if (!task.complete) {
+        task.dateComplete = null;
+      } else {
+        task.dateComplete = new Date();
+      }
       await task.save();
       return task;
     } catch (e) {
