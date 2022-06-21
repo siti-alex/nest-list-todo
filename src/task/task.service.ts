@@ -15,7 +15,12 @@ export class TaskService {
     // const task = await this.taskRepository.create(dto);
     // return task;
     try {
-      const board = this.boardService.getById(dto.boardId);
+      // const board = await this.boardService.getById(dto.boardId);
+      // console.log(board);
+      // if (board) {
+      //   const task = await this.taskRepository.create(dto);
+      //   return task;
+      // }
       const task = await this.taskRepository.create(dto);
       return task;
     } catch (e) {
