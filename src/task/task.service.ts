@@ -14,12 +14,28 @@ export class TaskService {
   async create(dto: CreateTaskDto) {
     // const task = await this.taskRepository.create(dto);
     // return task;
-    const board = this.boardService.getById(dto.boardId);
-    if (board) {
+    try {
+      const board = this.boardService.getById(dto.boardId);
       const task = await this.taskRepository.create(dto);
       return task;
-    } else {
+    } catch (e) {
       throw new HttpException('Таблица не найдена', HttpStatus.NOT_FOUND);
+    }
+    // const board = this.boardService.getById(dto.boardId);
+    // if (board) {
+    //   const task = await this.taskRepository.create(dto);
+    //   return task;
+    // } else {
+    //   throw new HttpException('Таблица не найдена', HttpStatus.NOT_FOUND);
+    // }
+  }
+  async getBoardById(id) {
+    const board = this.boardService.getById(id);
+    console.log(board);
+    if (board) {
+      return true;
+    } else {
+      return false;
     }
   }
 

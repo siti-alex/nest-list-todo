@@ -59,6 +59,8 @@ export class Task extends Model<Task, TaskCreationAttrs> {
   @ForeignKey(() => Board)
   @Column({
     type: DataType.INTEGER,
+    unique: false,
+    allowNull: false,
   })
   boardId: number;
 

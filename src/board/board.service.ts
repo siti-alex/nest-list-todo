@@ -23,6 +23,8 @@ export class BoardService {
 
   async getById(id) {
     const board = await this.boardRepostitory.findByPk(id);
-    return board;
+    if (board) {
+      return board;
+    } else return 'Доска не найдена';
   }
 }

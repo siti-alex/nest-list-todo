@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskService } from './task.service';
 
@@ -9,6 +16,12 @@ export class TaskController {
   @Post()
   createTask(@Body() dto: CreateTaskDto) {
     return this.taskService.create(dto);
+    // const board = this.taskService.getBoardById(dto.boardId);
+    // if (board) {
+    //   return this.taskService.create(dto);
+    // } else {
+    //   throw new HttpException('Таблица не найдена', HttpStatus.NOT_FOUND);
+    // }
   }
 
   @Get()
