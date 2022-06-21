@@ -34,4 +34,15 @@ export class TaskService {
       throw new HttpException('Доска не найдена', HttpStatus.NOT_FOUND);
     }
   }
+
+  async setComplete(id: number) {
+    try {
+      const task = await this.taskRepository.findByPk(id);
+      task.complete = !task.complete;
+      await task.save();
+      return task;
+    } catch (e) {
+      throw new HttpException('Задача не найдена', HttpStatus.NOT_FOUND);
+    }
+  }
 }

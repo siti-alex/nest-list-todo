@@ -26,7 +26,11 @@ export class TaskController {
 
   @Get(':id')
   getTasksByBoardId(@Param() params) {
-    console.log(params.id);
     return this.taskService.getTasksByBoardId(params.id);
+  }
+
+  @Post('setComplete/:id')
+  setComplete(@Param() params) {
+    return this.taskService.setComplete(params.id);
   }
 }
