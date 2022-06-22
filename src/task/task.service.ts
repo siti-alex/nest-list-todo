@@ -29,7 +29,7 @@ export class TaskService {
     try {
       const task = await this.taskRepository.findByPk(id);
       if (task) return task;
-      else throw new HttpException('Доска не найдена', HttpStatus.NOT_FOUND);
+      else throw new HttpException('Задача не найдена', HttpStatus.NOT_FOUND);
     } catch (e) {
       throw new HttpException(e, HttpStatus.NOT_FOUND);
     }
@@ -39,7 +39,7 @@ export class TaskService {
     try {
       const tasks = await this.taskRepository.findAll({ where: { boardId } });
       if (tasks.length > 0) return tasks;
-      else throw new HttpException('Доска не найдена', HttpStatus.NOT_FOUND);
+      else throw new HttpException('Задача не найдена', HttpStatus.NOT_FOUND);
     } catch (e) {
       throw new HttpException(e, HttpStatus.NOT_FOUND);
     }
@@ -57,7 +57,7 @@ export class TaskService {
         }
         await task.save();
         return task;
-      } else throw new HttpException('Доска не найдена', HttpStatus.NOT_FOUND);
+      } else throw new HttpException('Задача не найдена', HttpStatus.NOT_FOUND);
     } catch (e) {
       throw new HttpException(e, HttpStatus.NOT_FOUND);
     }
@@ -69,7 +69,7 @@ export class TaskService {
       if (task) {
         await task.destroy();
         return `Задача под номером ${id} успешно удалена`;
-      } else throw new HttpException('Доска не найдена', HttpStatus.NOT_FOUND);
+      } else throw new HttpException('Задача не найдена', HttpStatus.NOT_FOUND);
     } catch (e) {
       throw new HttpException(e, HttpStatus.NOT_FOUND);
     }
@@ -81,7 +81,7 @@ export class TaskService {
         task.title = dto.title;
         task.description = dto.description;
         await task.save();
-      } else throw new HttpException('Доска не найдена', HttpStatus.NOT_FOUND);
+      } else throw new HttpException('Задача не найдена', HttpStatus.NOT_FOUND);
     } catch (e) {
       throw new HttpException(e, HttpStatus.NOT_FOUND);
     }

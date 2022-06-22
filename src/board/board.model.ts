@@ -16,7 +16,7 @@ interface BoardModel {
   description: string;
 }
 @Table({ tableName: 'boards' })
-export class Board extends Model<Board> {
+export class Board extends Model<Board, BoardModel> {
   @Column({
     type: DataType.INTEGER,
     unique: true,
