@@ -25,13 +25,18 @@ export class TaskService {
     return tasks;
   }
 
+  async getTaskById(id: number) {
+    const task = await this.taskRepository.findByPk(id);
+    return task;
+  }
+
   async getTasksByBoardId(boardId: number) {
     try {
       const tasks = await this.taskRepository.findAll({ where: { boardId } });
       if (tasks.length > 0) return tasks;
       else throw new HttpException('Доска не найдена', HttpStatus.NOT_FOUND);
     } catch (e) {
-      throw new HttpException('Доска не найдена', HttpStatus.NOT_FOUND);
+      throw new HttpException(e, HttpStatus.NOT_FOUND);
     }
   }
 
@@ -56,6 +61,16 @@ export class TaskService {
       const task = await this.taskRepository.findByPk(id);
       await task.destroy();
       return `Задача под номером ${id} успешно удалена`;
+    } catch (e) {
+      throw new HttpException('Задача не найдена', HttpStatus.NOT_FOUND);
+    }
+  }
+  async changeTask(id: number, dto: CreateTaskDto) {
+    try {
+      const task = await this.taskRepository.findByPk(id);
+      task.title = dto.title;
+      task.description = dto.description;
+      await task.save();
     } catch (e) {
       throw new HttpException('Задача не найдена', HttpStatus.NOT_FOUND);
     }

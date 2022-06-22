@@ -25,9 +25,14 @@ export class TaskController {
     return this.taskService.getAll();
   }
 
-  @Get(':id')
+  @Get('board/:id')
   getTasksByBoardId(@Param() params) {
     return this.taskService.getTasksByBoardId(params.id);
+  }
+
+  @Get(':id')
+  getTaskById(@Param('id') id: number) {
+    return this.taskService.getTaskById(id);
   }
 
   @Post('setComplete/:id')
@@ -37,5 +42,10 @@ export class TaskController {
   @Delete('delete/:id')
   removeTask(@Param() params) {
     return this.taskService.deleteTaskById(params.id);
+  }
+
+  @Post('change/:id')
+  changeTask(@Param('id') id: number, @Body() dto: CreateTaskDto) {
+    return this.taskService.changeTask(id, dto);
   }
 }
