@@ -28,7 +28,8 @@ export class TaskService {
   async getTaskById(id: number) {
     try {
       const task = await this.taskRepository.findByPk(id);
-      return task;
+      if (task) return task;
+      else throw new HttpException('Доска не найдена', HttpStatus.NOT_FOUND);
     } catch (e) {
       throw new HttpException(e, HttpStatus.NOT_FOUND);
     }
@@ -47,14 +48,16 @@ export class TaskService {
   async setComplete(id: number) {
     try {
       const task = await this.taskRepository.findByPk(id);
-      task.complete = !task.complete;
-      if (!task.complete) {
-        task.dateComplete = null;
-      } else {
-        task.dateComplete = new Date();
-      }
-      await task.save();
-      return task;
+      if (task) {
+        task.complete = !task.complete;
+        if (!task.complete) {
+          task.dateComplete = null;
+        } else {
+          task.dateComplete = new Date();
+        }
+        await task.save();
+        return task;
+      } else throw new HttpException('Доска не найдена', HttpStatus.NOT_FOUND);
     } catch (e) {
       throw new HttpException(e, HttpStatus.NOT_FOUND);
     }
@@ -63,8 +66,10 @@ export class TaskService {
   async deleteTaskById(id: number) {
     try {
       const task = await this.taskRepository.findByPk(id);
-      await task.destroy();
-      return `Задача под номером ${id} успешно удалена`;
+      if (task) {
+        await task.destroy();
+        return `Задача под номером ${id} успешно удалена`;
+      } else throw new HttpException('Доска не найдена', HttpStatus.NOT_FOUND);
     } catch (e) {
       throw new HttpException(e, HttpStatus.NOT_FOUND);
     }
@@ -72,9 +77,11 @@ export class TaskService {
   async changeTask(id: number, dto: CreateTaskDto) {
     try {
       const task = await this.taskRepository.findByPk(id);
-      task.title = dto.title;
-      task.description = dto.description;
-      await task.save();
+      if (task) {
+        task.title = dto.title;
+        task.description = dto.description;
+        await task.save();
+      } else throw new HttpException('Доска не найдена', HttpStatus.NOT_FOUND);
     } catch (e) {
       throw new HttpException(e, HttpStatus.NOT_FOUND);
     }
