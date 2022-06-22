@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user-dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -22,5 +31,18 @@ export class UserController {
   @Post('addBoard')
   addBoard(@Body() boardDto: CreateBoardDto) {
     return this.userService.addBoard(boardDto);
+  }
+
+  @Get(':id')
+  getUserByLogin(@Param('id') id: number) {
+    return this.userService.getUserById(id);
+  }
+  @Delete(':id')
+  deleteUserById(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.deleteUser(id);
+  }
+  @Post('change/:id')
+  changeFio(@Param('id', ParseIntPipe) id: number, @Body() fio: string) {
+    return this.userService.changeFio(id, fio);
   }
 }
