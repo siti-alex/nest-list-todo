@@ -50,4 +50,14 @@ export class TaskService {
       throw new HttpException('Задача не найдена', HttpStatus.NOT_FOUND);
     }
   }
+
+  async deleteTaskById(id: number) {
+    try {
+      const task = await this.taskRepository.findByPk(id);
+      await task.destroy();
+      return `Задача под номером ${id} успешно удалена`;
+    } catch (e) {
+      throw new HttpException('Задача не найдена', HttpStatus.NOT_FOUND);
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   HttpStatus,
@@ -32,5 +33,9 @@ export class TaskController {
   @Post('setComplete/:id')
   setComplete(@Param() params) {
     return this.taskService.setComplete(params.id);
+  }
+  @Delete('delete/:id')
+  removeTask(@Param() params) {
+    return this.taskService.deleteTaskById(params.id);
   }
 }
