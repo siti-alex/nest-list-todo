@@ -58,7 +58,7 @@ export class BoardService {
       if (board) {
         board.description = dto.description;
         await board.save();
-        return 'Описание изменено';
+        return board;
       }
     } catch (e) {
       throw new HttpException(e, HttpStatus.NOT_FOUND);

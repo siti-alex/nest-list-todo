@@ -42,7 +42,7 @@ export class UserController {
     return this.userService.deleteUser(id);
   }
   @Post('change/:id')
-  changeFio(@Param('id', ParseIntPipe) id: number, @Body() fio: string) {
-    return this.userService.changeFio(id, fio);
+  changeFio(@Param('id', ParseIntPipe) id: number, @Body() dto: CreateUserDto) {
+    return this.userService.changeFio(id, dto);
   }
 }

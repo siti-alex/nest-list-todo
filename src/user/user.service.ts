@@ -73,11 +73,12 @@ export class UserService {
     }
   }
 
-  async changeFio(id: number, fio: string) {
+  async changeFio(id: number, dto: CreateUserDto) {
     try {
       const user = await this.userRepository.findByPk(id);
       if (user) {
-        user.fio = fio;
+        user.fio = dto.fio;
+        await user.save();
         return user;
       } else
         throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
