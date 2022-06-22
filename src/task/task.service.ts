@@ -16,7 +16,7 @@ export class TaskService {
       const task = await this.taskRepository.create(dto);
       return task;
     } catch (e) {
-      throw new HttpException('Таблица не найдена', HttpStatus.NOT_FOUND);
+      throw new HttpException(e, HttpStatus.NOT_FOUND);
     }
   }
 
@@ -26,8 +26,12 @@ export class TaskService {
   }
 
   async getTaskById(id: number) {
-    const task = await this.taskRepository.findByPk(id);
-    return task;
+    try {
+      const task = await this.taskRepository.findByPk(id);
+      return task;
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.NOT_FOUND);
+    }
   }
 
   async getTasksByBoardId(boardId: number) {
@@ -52,7 +56,7 @@ export class TaskService {
       await task.save();
       return task;
     } catch (e) {
-      throw new HttpException('Задача не найдена', HttpStatus.NOT_FOUND);
+      throw new HttpException(e, HttpStatus.NOT_FOUND);
     }
   }
 
@@ -62,7 +66,7 @@ export class TaskService {
       await task.destroy();
       return `Задача под номером ${id} успешно удалена`;
     } catch (e) {
-      throw new HttpException('Задача не найдена', HttpStatus.NOT_FOUND);
+      throw new HttpException(e, HttpStatus.NOT_FOUND);
     }
   }
   async changeTask(id: number, dto: CreateTaskDto) {
@@ -72,7 +76,7 @@ export class TaskService {
       task.description = dto.description;
       await task.save();
     } catch (e) {
-      throw new HttpException('Задача не найдена', HttpStatus.NOT_FOUND);
+      throw new HttpException(e, HttpStatus.NOT_FOUND);
     }
   }
 }

@@ -6,6 +6,7 @@ import {
   HttpException,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Post,
 } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -26,26 +27,29 @@ export class TaskController {
   }
 
   @Get('board/:id')
-  getTasksByBoardId(@Param() params) {
-    return this.taskService.getTasksByBoardId(params.id);
+  getTasksByBoardId(@Param('id', ParseIntPipe) id: number) {
+    return this.taskService.getTasksByBoardId(id);
   }
 
   @Get(':id')
-  getTaskById(@Param('id') id: number) {
+  getTaskById(@Param('id', ParseIntPipe) id: number) {
     return this.taskService.getTaskById(id);
   }
 
   @Post('setComplete/:id')
-  setComplete(@Param() params) {
-    return this.taskService.setComplete(params.id);
+  setComplete(@Param('id', ParseIntPipe) id: number) {
+    return this.taskService.setComplete(id);
   }
   @Delete('delete/:id')
-  removeTask(@Param() params) {
-    return this.taskService.deleteTaskById(params.id);
+  removeTask(@Param('id', ParseIntPipe) id: number) {
+    return this.taskService.deleteTaskById(id);
   }
 
   @Post('change/:id')
-  changeTask(@Param('id') id: number, @Body() dto: CreateTaskDto) {
+  changeTask(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: CreateTaskDto,
+  ) {
     return this.taskService.changeTask(id, dto);
   }
 }
